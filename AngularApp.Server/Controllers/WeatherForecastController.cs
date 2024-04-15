@@ -29,5 +29,17 @@ namespace AngularApp.Server.Controllers
             })
             .ToArray();
         }
+
+        [HttpPost]
+        public bool Post([FromBody] JobModel model)
+        {
+            return true;
+        }
+        public class JobModel
+        {
+            public string Title { get; set; }
+            public string Description { get; set; }
+
+        }
     }
 }

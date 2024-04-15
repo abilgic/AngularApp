@@ -1,14 +1,50 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
 <h1 id="tableLabel">ANGULAR TEST</h1>
 <employees></employees>
-<ul class="list-group">
-  <li *ngFor="let forecast of forecasts"
-      class="list-group-item">
-    {{forecast.date}}
-    {{ forecast.temperatureC }}
-    {{ forecast.temperatureF }}
-    {{ forecast.summary }}
-  </li>
-</ul>
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#jobModal">
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="jobModal" tabindex="-1" aria-labelledby="jobModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="jobModalLabel">Add Job</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3 row">
+          <label for="staticEmail" class="col-sm-2 col-form-label"> Title</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="title" >
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label for="inputPassword" class="col-sm-2 col-form-label">Description</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="description">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="createJob()">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<br>Welcome.
+<br>
+ Place -
+<input id="exchageRateDate" type="text" value="Sydney" #titleparam />
+<button (click)="myFunc(titleparam)" formtarget="_blank">Test</button>
 
 <h1 id="tableLabel">Weather forecast</h1>
 

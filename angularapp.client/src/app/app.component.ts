@@ -32,6 +32,22 @@ export class AppComponent implements OnInit {
       }
     );
   }
+  myFunc(input: HTMLInputElement) {
+    console.log("inputval=" + input.value);
+    var num1 = ((document.getElementById("exchageRateDate") as HTMLInputElement).value);
+    console.log(num1);
+  }
+  createJob() {
+    let job = {
+      title: ((document.getElementById("title") as HTMLInputElement).value),
+      description: ((document.getElementById("description") as HTMLInputElement).value)
+    }
+    this.http.post('/weatherforecast', job)
+      .subscribe(response => {
+        console.log(response.toString());
+      });
+
+  }
 
   title = 'angularapp.client';
 }
