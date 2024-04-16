@@ -1,3 +1,4 @@
+using AngularApp.Server.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AngularApp.Server.Controllers
@@ -6,6 +7,7 @@ namespace AngularApp.Server.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
+        ApplicationDbContext _context;
         private static readonly string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
@@ -13,27 +15,42 @@ namespace AngularApp.Server.Controllers
 
         private readonly ILogger<WeatherForecastController> _logger;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ApplicationDbContext context)
         {
-            _logger = logger;
+            _context = context;
         }
 
-        [HttpGet(Name = "GetWeatherForecast")]
-        public IEnumerable<WeatherForecast> Get()
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Job>> Get(int id)
         {
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
+            var result = _context.Set<Job>().FirstOrDefault(p => p.Id == id);
+            ;
+            return result;
         }
+        [HttpGet(Name = "GetWeatherForecast")]
+        public IEnumerable<Job> Get()
+        {
+            return _context.Set<Job>().ToArray();
+        }
+
+        //[HttpGet(Name = "GetWeatherForecast")]
+        //public IEnumerable<Job> Get(int id)
+        //{
+        //    return _context.Set<Job>().ToArray();
+        //}
 
         [HttpPost]
         public bool Post([FromBody] JobModel model)
         {
-            return true;
+            Job job = new Job
+            {
+                Title = model.Title,
+                Description = model.Description
+            };
+
+            _context.Add(job);
+            return _context.SaveChanges() > 0;
+
         }
         public class JobModel
         {

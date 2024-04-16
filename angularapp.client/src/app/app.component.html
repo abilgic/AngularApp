@@ -6,8 +6,8 @@
 <employees></employees>
 
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#jobModal">
-  Launch demo modal
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#jobModal" (click) = toggleDisplaySaveBtn()>
+  Add Job
 </button>
 
 <!-- Modal -->
@@ -15,7 +15,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="jobModalLabel">Add Job</h1>
+        <h1 class="modal-title fs-5" id="jobModalLabel"></h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -34,39 +34,28 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" (click)="createJob()">Save changes</button>
+        <button type="button" class="btn btn-primary"  id="btnSave" *ngIf = "isShowSaveBtn" >Save</button>
+        <button type="button" class="btn btn-primary"  id="btnUpdate" *ngIf = "isShowUpdateBtn">Update</button>
       </div>
     </div>
   </div>
 </div>
 
-<br>Welcome.
-<br>
- Place -
-<input id="exchageRateDate" type="text" value="Sydney" #titleparam />
-<button (click)="myFunc(titleparam)" formtarget="_blank">Test</button>
-
-<h1 id="tableLabel">Weather forecast</h1>
-
-<p>This component demonstrates fetching data from the server.</p>
-
-<p *ngIf="!forecasts"><em>Loading... Please refresh once the ASP.NET backend has started. See <a href="https://aka.ms/jspsintegrationangular">https://aka.ms/jspsintegrationangular</a> for more details.</em></p>
-
-<table *ngIf="forecasts">
+<table *ngIf="jobs">
   <thead>
     <tr>
-      <th>Date</th>
-      <th>Temp. (C)</th>
-      <th>Temp. (F)</th>
-      <th>Summary</th>
+      <th>Id</th>
+      <th>title</th>
+      <th>description</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let forecast of forecasts">
-      <td>{{ forecast.date }}</td>
-      <td>{{ forecast.temperatureC }}</td>
-      <td>{{ forecast.temperatureF }}</td>
-      <td>{{ forecast.summary }}</td>
+    <tr *ngFor="let job of jobs">
+      <td>{{ job.id }}</td>
+      <td>{{ job.title }}</td>
+      <td>{{ job.description }}</td>
+      <td><button type="button" class="btn btn-primary" id="btnUpdate" data-bs-toggle="modal" data-bs-target="#jobModal" (click) = "getJob(job.id)">Update</button></td>
+      <td><button type="button" class="btn btn-secondary" id="btnDelete" >Delete</button></td>
     </tr>
   </tbody>
 </table>
