@@ -20,13 +20,19 @@
       </div>
       <div class="modal-body">
         <div class="mb-3 row">
-          <label for="staticEmail" class="col-sm-2 col-form-label"> Title</label>
+          <label  class="col-sm-2 col-form-label"> Id</label>
           <div class="col-sm-10">
-            <input type="text" class="form-control" id="title" >
+            <input type="text" class="form-control" id="jobid" readonly="readonly">
           </div>
         </div>
         <div class="mb-3 row">
-          <label for="inputPassword" class="col-sm-2 col-form-label">Description</label>
+          <label  class="col-sm-2 col-form-label"> Title</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="title">
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label  class="col-sm-2 col-form-label">Description</label>
           <div class="col-sm-10">
             <input type="text" class="form-control" id="description">
           </div>
@@ -34,8 +40,8 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary"  id="btnSave" *ngIf = "isShowSaveBtn" >Save</button>
-        <button type="button" class="btn btn-primary"  id="btnUpdate" *ngIf = "isShowUpdateBtn">Update</button>
+        <button type="button" class="btn btn-primary"  id="btnSave" *ngIf = "isShowSaveBtn" (click) =createJob()>Save</button>
+        <button type="button" class="btn btn-primary"  id="btnUpdate" *ngIf = "isShowUpdateBtn" (click) = updateJob()>Update</button>
       </div>
     </div>
   </div>
@@ -54,8 +60,8 @@
       <td>{{ job.id }}</td>
       <td>{{ job.title }}</td>
       <td>{{ job.description }}</td>
-      <td><button type="button" class="btn btn-primary" id="btnUpdate" data-bs-toggle="modal" data-bs-target="#jobModal" (click) = "getJob(job.id)">Update</button></td>
-      <td><button type="button" class="btn btn-secondary" id="btnDelete" >Delete</button></td>
+      <td><button type="button" class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#jobModal" (click) = "getJob(job.id);toggleDisplayUpdateBtn()">Update</button></td>
+      <td><button type="button" class="btn btn-secondary"  (click) = deleteJob(job.id)>Delete</button></td>
     </tr>
   </tbody>
 </table>

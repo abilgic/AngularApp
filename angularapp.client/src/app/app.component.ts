@@ -74,35 +74,50 @@ export class AppComponent implements OnInit {
     );
   }
   getJob(val: any) {
-    this.isShowSaveBtn = false;
-    this.isShowUpdateBtn = true;
+    //this.isShowSaveBtn = false;
+    //this.isShowUpdateBtn = true;
     (document.getElementById("jobModalLabel") as HTMLInputElement).innerHTML = "Update Job";
-    alert(this.apiUrl+'/'+val);
     this.http.get<Job>(this.apiUrl + '/' + val).subscribe(
       (result) => {
-        this.title.setValue(result.title);
-        this.description.setValue(result.description);
-        this.btnSave.disabled;
-
+        (document.getElementById("jobid") as HTMLInputElement).value = result.id.toString();
+        (document.getElementById("title") as HTMLInputElement).value = result.title;
+        (document.getElementById("description") as HTMLInputElement).value = result.description;
       },
       (error) => {
         console.error(error);
       }
     );
   }
-  updateJob(val: any) {
+  updateJob() {
+
     let job = {
+      id: (document.getElementById("jobid") as HTMLInputElement).value,
       title: ((document.getElementById("title") as HTMLInputElement).value),
       description: ((document.getElementById("description") as HTMLInputElement).value)
     }
-    this.btnSave.enabled;
-    return this.http.put(`${this.apiUrl}/${val.id}`, job);
+    return this.http.put('/weatherforecast', job).subscribe(response => {
+      if (response) {
+        alert("Job is Updated");
+      }
+      else {
+        alert("job is not updated");
+      }
+    });
   }
 
 
-  //deleteJob(val: any) {
-  //  return this.http.delete(`${this.apiUrl}/${val.id}`);
-  //}
+  deleteJob(val: any) {
+    return this.http.delete(this.apiUrl + '/' + val).subscribe(response => {
+      if (response) {
+        alert("Job is deleted");
+
+      }
+      else {
+
+        alert("job is not deleted");
+      }
+    });
+  }
 
   createJob() {
     let job = {
@@ -111,7 +126,12 @@ export class AppComponent implements OnInit {
     }
     this.http.post('/weatherforecast', job)
       .subscribe(response => {
-        console.log(response.toString());
+        if (response) {
+          alert("Job is Saved");
+        }
+        else {
+          alert("job is not saved");
+        }
       });
 
   }
