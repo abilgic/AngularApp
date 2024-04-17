@@ -2,12 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
-interface WeatherForecast {
-  date: string;
-  temperatureC: number;
-  temperatureF: number;
-  summary: string;
-}
 interface Job {
   id: number
   title: string;
@@ -19,16 +13,11 @@ interface Job {
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
-  public forecasts: WeatherForecast[] = [];
   public jobs: Job[] = [];
-  public editmode = false;
-
-  title = new FormControl('title');
-  description = new FormControl('description');
   btnSave = new FormControl('btnSave');
   btnUpdate = new FormControl('btnUpdate');
 
-  public apiUrl: string = '/weatherforecast';
+  public apiUrl: string = 'http://localhost:5231/JobApplication';
   isShowSaveBtn = false;
   isShowUpdateBtn = false;
 
@@ -43,28 +32,16 @@ export class AppComponent implements OnInit {
     this.isShowSaveBtn = false;
     (document.getElementById("jobModalLabel") as HTMLInputElement).innerHTML = "Update Job";
   }
-  constructor(private http: HttpClient) {
-
+  constructor(private http: HttpClient)
+  {
   }
 
   ngOnInit() {
-    /* this.getForecasts();*/
     this.getJobs();
   }
 
-  //getForecasts() {
-  //  this.http.get<WeatherForecast[]>('/weatherforecast').subscribe(
-  //    (result) => {
-  //      this.forecasts = result;
-  //    },
-  //    (error) => {
-  //      console.error(error);
-  //    }
-  //  );
-  //}
   getJobs() {
-
-    this.http.get<Job[]>('/weatherforecast').subscribe(
+    this.http.get<Job[]>(this.apiUrl).subscribe(
       (result) => {
         this.jobs = result;
       },
@@ -73,6 +50,7 @@ export class AppComponent implements OnInit {
       }
     );
   }
+
   getJob(val: any) {
     //this.isShowSaveBtn = false;
     //this.isShowUpdateBtn = true;
@@ -88,14 +66,14 @@ export class AppComponent implements OnInit {
       }
     );
   }
-  updateJob() {
 
+  updateJob() {
     let job = {
       id: (document.getElementById("jobid") as HTMLInputElement).value,
       title: ((document.getElementById("title") as HTMLInputElement).value),
       description: ((document.getElementById("description") as HTMLInputElement).value)
     }
-    return this.http.put('/weatherforecast', job).subscribe(response => {
+    return this.http.put(this.apiUrl, job).subscribe(response => {
       if (response) {
         alert("Job is Updated");
       }
@@ -104,7 +82,6 @@ export class AppComponent implements OnInit {
       }
     });
   }
-
 
   deleteJob(val: any) {
     return this.http.delete(this.apiUrl + '/' + val).subscribe(response => {
@@ -124,7 +101,7 @@ export class AppComponent implements OnInit {
       title: ((document.getElementById("title") as HTMLInputElement).value),
       description: ((document.getElementById("description") as HTMLInputElement).value)
     }
-    this.http.post('/weatherforecast', job)
+    this.http.post(this.apiUrl, job)
       .subscribe(response => {
         if (response) {
           alert("Job is Saved");
@@ -133,8 +110,5 @@ export class AppComponent implements OnInit {
           alert("job is not saved");
         }
       });
-
   }
-
-
 }

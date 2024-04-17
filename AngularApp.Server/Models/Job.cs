@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.OpenApi;
 
 namespace AngularApp.Server.Models
 {
@@ -10,4 +12,6 @@ namespace AngularApp.Server.Models
         public string Description { get; set; }
     }
 
+
 }
+

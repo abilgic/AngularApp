@@ -1,21 +1,14 @@
-using AngularApp.Server.Models;
+﻿using AngularApp.Server.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AngularApp.Server.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    public class JobApplicationController : ControllerBase
     {
         ApplicationDbContext _context;
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
-        private readonly ILogger<WeatherForecastController> _logger;
-
-        public WeatherForecastController(ApplicationDbContext context)
+        public JobApplicationController(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -27,7 +20,7 @@ namespace AngularApp.Server.Controllers
 
             return result;
         }
-        [HttpGet(Name = "GetWeatherForecast")]
+        [HttpGet]
         public IEnumerable<Job> Get()
         {
             return _context.Set<Job>().ToArray();
